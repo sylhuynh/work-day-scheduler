@@ -29,23 +29,56 @@ for (var i = 0; i < hours.length; i++) {
     //if hours is greater than current time 
     if (hours[i] > currentHr[3]) {
         // then change the background to green (class: future)
-        $(hoursBlock[i]).addClass("future"); 
-        
+        $(hoursBlock[i]).addClass("future");
+
     }
-    
+
     //if hours is the same as the current time 
     else if (hours[i] == currentHr[3]) {
         // then change the background to red (class: present)
-        $(hoursBlock[i]).addClass("present"); 
+        $(hoursBlock[i]).addClass("present");
     }
-    
+
     //if hours is greater than current time 
     else {
         // then change the background to grey (class: past)
-        $(hoursBlock[i]).addClass("past"); 
-        
-        
+        $(hoursBlock[i]).addClass("past");
+
+
     }
 
 };
+
+// assign variable container to hold all the btns
+var saveBtn = $(".btn");
+
+// when the user clicks on the saveBtn
+saveBtn.on("click", function () {
+    // assign new var to the sibling(textarea) of the savebtn that was clicked on
+    var descriptionText = $(this).siblings(".description").val();
+
+    //assign new var to the parent(div)'s id if the savebtn that was clicked on 
+    var timeBlockEl = $(this).parent(".time-block").attr("id")
+
+    //store the key and the value to local storage
+    localStorage.setItem(timeBlockEl, descriptionText);
+});
+
+// assign variable container to hold all the time blocks into an array
+var timeBlocks = $(".time-block")
+
+// iterates over each time block and retrieve data from local storage
+timeBlocks.each(function (index, div) {
+    // if there are saved inputs in local storage
+    if (localStorage.getItem(div.id)) {
+
+        // then display saved inputs in text area
+        var SavedUserInput = localStorage.getItem(div.id)
+        $(div).children("textarea").val(SavedUserInput);
+
+    } else {
+        
+    }
+})
+
 
